@@ -161,7 +161,7 @@ Return type: Promise containing the generated diaSecret for the payload.
 
 
 ```sh
-    const diaSecret = await generateHash( options, 'secretKey' );
+const diaSecret = await generateHash( options, 'secretKey' );
 ```
 
 ##### For more details about the Payment Gateway API please follow this [LINK](https://developer.pinelabs.com/payment-gateway/docs)
