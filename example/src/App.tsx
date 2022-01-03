@@ -1,11 +1,16 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
-import { startPayment, generateHash } from 'react-native-pinelabs-sdk';
+import {
+  startPayment,
+  generateHash,
+  paymentOptions,
+  hashOptions,
+} from 'react-native-pinelabs-sdk';
 
 export default function App() {
   const handlePress = async () => {
-    const options = {
+    const hashOptions: hashOptions = {
       merchantId: 106600,
       merchantTxnId: `reactTestApp${Math.round(Math.random() * 10000000)}`,
       merchantAccessCode: 'bcf441be-411b-46a1-aa88-c6e852a7d68c',
@@ -18,20 +23,25 @@ export default function App() {
       customerId: '786',
       customerAddress: 'hno 15',
       customerAddressPin: '201301',
-      diaSecret:
-        'FD39611A4498F67C3E49CE5FEC6083638C39AD6BC8C287F829E803AF89C6F761',
-      diaSecretType: 'SHA256',
       isProductionRequest: false,
       isHeaderToBeShow: true,
       themeId: 2,
       productCode: '40',
     };
+
     const hash = await generateHash(
-      options,
+      hashOptions,
       '9A7282D0556544C59AFE8EC92F5C85F6'
     );
+
+    const paymentOptions: paymentOptions = {
+      ...hashOptions,
+      diaSecret: hash,
+      diaSecretType: 'SHA256',
+    };
+
     startPayment({
-      options: { ...options, diaSecret: hash },
+      options: paymentOptions,
       onResponse: () => {
         console.log('response received');
       },

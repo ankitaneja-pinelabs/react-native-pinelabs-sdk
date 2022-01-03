@@ -19,7 +19,7 @@ const PinelabsSdk = NativeModules.PinelabsSdk
 
 const { start, generateHash: nativeGenerateHash } = PinelabsSdk;
 
-type optionsType = {
+export interface hashOptions {
   merchantTxnId: string;
   merchantId: number;
   amount: number;
@@ -32,27 +32,30 @@ type optionsType = {
   customerId: string;
   customerAddress: string;
   customerAddressPin: string;
-  diaSecret: string;
-  diaSecretType: string;
   productCode?: string;
   themeId?: number;
   isProductionRequest?: boolean;
   isHeaderToBeShow?: boolean;
 };
 
-type paramsType = {
-  options: optionsType;
+export interface paymentOptions extends hashOptions {
+  diaSecret: string;
+  diaSecretType: string;
+}
+
+export interface paymentParams {
+  options: paymentOptions;
   onResponse: CallableFunction;
 };
 
-export const startPayment = (params: paramsType): void => {
+export const startPayment = (params: paymentParams): void => {
   start(params.options, params.onResponse);
 };
 
 export const generateHash = (
-  options: optionsType,
+  options: hashOptions,
   secretKey: string
-): string => {
+): Promise<string> => {
   return nativeGenerateHash(options, secretKey);
 };
 
