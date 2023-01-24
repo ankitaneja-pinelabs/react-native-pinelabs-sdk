@@ -55,6 +55,6 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation files('libs/Edge_sdk.aar')
+    implementation files('libs/app-release.aar')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
