@@ -53,6 +53,6 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.github.ankitaneja-pinelabs:Plural_SDK:v2.1'
+    implementation 'com.github.ankitaneja-pinelabs:edge-android-sdk:1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
