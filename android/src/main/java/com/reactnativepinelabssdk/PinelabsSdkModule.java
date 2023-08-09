@@ -99,29 +99,43 @@ public class PinelabsSdkModule extends ReactContextBaseJavaModule {
     String payModeOnLandingPage = options.getString("payModeOnLandingPage");
     String customerEmail = options.getString("customerEmail");
     String customerMobileNo = options.getString("customerMobileNo");
-    String customerId = options.getString("customerId");
-    String customerAddress = options.getString("customerAddress");
-    String customerAddressPin = options.getString("customerAddressPin");
+    String customerId = options.hasKey("customerId") ? options.getString("customerId") : "";
+    String customerAddress = options.hasKey("customerAddress") ? options.getString("customerAddress") : "";
+    String customerAddressPin = options.hasKey("customerAddressPin") ? options.getString("customerAddressPin") : "";
     String productCode = options.hasKey("productCode") ? options.getString("productCode") : "";
     Boolean isProductionRequest = options.hasKey("isProductionRequest") && options.getBoolean("isProductionRequest");
+    String udfField1 = options.hasKey("udfField1") ? options.getString("udfField1") : "";
+    String udfField2 = options.hasKey("udfField2") ? options.getString("udfField2") : "";
+    String udfField3 = options.hasKey("udfField3") ? options.getString("udfField3") : "";
+    String udfField4 = options.hasKey("udfField4") ? options.getString("udfField4") : "";
+    String multiCartProductDetails = options.hasKey("multiCartProductDetails") ? options.getString("multiCartProductDetails") : "";
+    int requestAgent = options.hasKey("requestAgent") ? options.getInt("requestAgent") : -1;
+    int sequenceId = options.hasKey("sequenceId") ? options.getInt("sequenceId") : -1;
 
 
     Order order = new Order();
     order
-      .setMerchantId(merchantId)
+      .setMerchantId(merchantId) 
       .setMerchantUrl(isProductionRequest ? PinePGConfig.PINE_PG_RETURN_URL_PRODUCTION : PinePGConfig.PINE_PG_PRETURN_URL_SANDBOX)
       .setMerchantAccessCode(merchantAccessCode)
       .setAmountInPaise(amount)
       .setUniqueMerchantTxnId(merchantTxnId)
       .setNavigationMode(navigationMode)
-      .setTransactionType(transactionType)
+      .setTransactionType(transactionType) 
       .setPayModeOnLandingPage(payModeOnLandingPage)
       .setCustomerEmail(customerEmail)
       .setCustomerMobileNo(customerMobileNo)
       .setCustomerId(customerId)
       .setCustomerAddress(customerAddress)
       .setCustomerAddressPin(customerAddressPin)
-      .setProductCode(productCode);
+      .setProductCode(productCode)
+      .setUdfField1(udfField1)
+      .setUdfField2(udfField2)
+      .setUdfField3(udfField3)
+      .setUdfField4(udfField4)
+      .setRequestAgent(requestAgent)
+      .setSequenceId(sequenceId)
+      .setMultiCartProductDetails(multiCartProductDetails);
     return order;
   }
 
@@ -136,6 +150,37 @@ public class PinelabsSdkModule extends ReactContextBaseJavaModule {
     hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.PAYMENT_MODE_LKANDING_PAGE, objPaymentParam.getPayModeOnLandingPage());
     hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.CUSTOMER_EMAIL, objPaymentParam.getCustomerEmail());
     hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.CUSTOMER_MOBILE_NO, objPaymentParam.getCustomerMobileNo());
+    if(objPaymentParam.getCustomerId().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.CUSTOMER_ID, objPaymentParam.getCustomerId());
+    }
+    if(objPaymentParam.getCustomerAddress().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.CUSTOMER_ADDRESS, (objPaymentParam.getCustomerAddress()) );
+    }
+    if(objPaymentParam.getCustomerAddressPin().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.CUSTOMER_ADDRESS_PIN, objPaymentParam.getCustomerAddressPin());
+    }
+    if(objPaymentParam.getUdfField1().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.UDF_FIELD1, objPaymentParam.getUdfField1());
+    }
+    if(objPaymentParam.getUdfField2().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.UDF_FIELD2, objPaymentParam.getUdfField2());
+    }
+    if(objPaymentParam.getUdfField3().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.UDF_FIELD3, objPaymentParam.getUdfField3());
+    }
+    if(objPaymentParam.getUdfField4().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.UDF_FIELD4, objPaymentParam.getUdfField4());
+    }
+    if(objPaymentParam.getMultiCartProductDetails().length() > 0){
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.MULTICART_PRODUCT_DETAILS, objPaymentParam.getMultiCartProductDetails());
+    }
+    if(objPaymentParam.getRequestAgent() >= 0) {
+    hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.REQUEST_AGENT, String.valueOf(objPaymentParam.getRequestAgent()));
+    }
+    if(objPaymentParam.getSequenceId() >= 0) {
+      hmPaymentParam.put(PinePGConfig.PaymentParamsConstants.SEQUENCE_ID, String.valueOf(objPaymentParam.getSequenceId()));
+    }
     return hmPaymentParam;
   }
 }
+
