@@ -57,6 +57,13 @@ class PinelabsSdk: UIViewController {
         let customerId = options["customerId"] as! String;
         let customerAddress = options["customerAddress"] as! String;
         let customerAddressPin = options["customerAddressPin"] as! String;
+        let udfField1 = options["udfField1"] != nil ? options["udfField1"] as! String : "";
+        let udfField2 = options["udfField2"] != nil ? options["udfField2"] as! String : "";
+        let udfField3 = options["udfField3"] != nil ? options["udfField3"] as! String : "";
+        let udfField4 = options["udfField4"] != nil ? options["udfField4"] as! String : "";
+        let requestAgent = options["requestAgent"] != nil ? options["requestAgent"] as! Int : -1;
+        let sequenceId = options["sequenceId"] != nil ? options["sequenceId"] as! Int : -1;
+
         
         let paymentParamBuilder = Order()
         paymentParamBuilder.setMerchantId(merchantId: merchantId)
@@ -66,13 +73,18 @@ class PinelabsSdk: UIViewController {
             .setAmountInPaise(amountInPaise: Int64(amount))
             .setTransactionType(transactionType: transactionType)
             .setPayModeOnLandingPage(payModeOnLandingPage: payModeOnLandingPage)
-            .setSequenceId(sequenceId: 1)
+            .setSequenceId(sequenceId: sequenceId)
             .setProductCode(productCode: productCode)
             .setCustomerEmail(customerEmail: customerEmail)
             .setCustomerMobileNo(customerMobileNo: customerMobileNo)
             .setCustomerId(customerId: customerId)
             .setCustomerAddress(customerAddress: customerAddress)
-            .setCustomerAddressPin(customerAddressPin: customerAddressPin);
+            .setCustomerAddressPin(customerAddressPin: customerAddressPin)
+            .setUdfField1(udfField1: udfField1)
+            .setUdfField2(udfField2: udfField2)
+            .setUdfField3(udfField3: udfField3)
+            .setUdfField4(udfField4: udfField4)
+            .setRequestAgent(requestAgent: requestAgent);
         return paymentParamBuilder
     }
 
@@ -85,7 +97,10 @@ class PinelabsSdk: UIViewController {
         hmPaymentParam[PaymentParamsConstants.MERCHANT_ACCESS_CODE]=String(objPaymentParam.getMerchantAccessCode())
         hmPaymentParam[PaymentParamsConstants.NAVIGATION_MODE]=String(objPaymentParam.getNavigationMode())
         hmPaymentParam[PaymentParamsConstants.TRANSACTION_TYPE]=String(objPaymentParam.getTransactionType())
-        hmPaymentParam[PaymentParamsConstants.SEQUENCE_ID]=String(objPaymentParam.getSequenceId())
+        if(objPaymentParam.getSequenceId() >= 0){
+            hmPaymentParam[PaymentParamsConstants.SEQUENCE_ID]=String(objPaymentParam.getSequenceId())
+        }
+
         if(objPaymentParam.getProductCode() != nil && objPaymentParam.getProductCode().count>0)
         {
             hmPaymentParam[PaymentParamsConstants.PRODUCT_CODE]=objPaymentParam.getProductCode();
@@ -102,9 +117,34 @@ class PinelabsSdk: UIViewController {
         {
             hmPaymentParam[PaymentParamsConstants.CUSTOMER_ID]=objPaymentParam.getCustomerId()
         }
+        if(objPaymentParam.getCustomerAddress() != nil && objPaymentParam.getCustomerAddress().count>0) {
+            hmPaymentParam[PaymentParamsConstants.CUSTOMER_ADDRESS]=objPaymentParam.getCustomerAddress()
+        }
+        if(objPaymentParam.getCustomerAddressPin() != nil && objPaymentParam.getCustomerAddressPin().count>0) {
+            hmPaymentParam[PaymentParamsConstants.CUSTOMER_ADDRESS_PIN]=objPaymentParam.getCustomerAddressPin()
+        }
+        if(objPaymentParam.getUdfField1() != nil && objPaymentParam.getUdfField1().count>0)
+        {
+            hmPaymentParam[PaymentParamsConstants.UDF_FIELD1]=objPaymentParam.getUdfField1()
+        }
+        if(objPaymentParam.getUdfField2() != nil && objPaymentParam.getUdfField2().count>0)
+        {
+            hmPaymentParam[PaymentParamsConstants.UDF_FIELD2]=objPaymentParam.getUdfField2()
+        }
+        if(objPaymentParam.getUdfField3() != nil && objPaymentParam.getUdfField3().count>0)
+        {
+            hmPaymentParam[PaymentParamsConstants.UDF_FIELD3]=objPaymentParam.getUdfField3()
+        }
+        if(objPaymentParam.getUdfField4() != nil && objPaymentParam.getUdfField4().count>0)
+        {
+            hmPaymentParam[PaymentParamsConstants.UDF_FIELD1]=objPaymentParam.getUdfField4()
+        }
+        if(objPaymentParam.getRequestAgent() >= 0)
+        {
+            hmPaymentParam[PaymentParamsConstants.REQUEST_AGENT]=String(objPaymentParam.getRequestAgent())
+        }
         hmPaymentParam[PaymentParamsConstants.PAYMENT_MODE_LOANDING_PAGE]=objPaymentParam.getPayModeOnLandingPage()
-        hmPaymentParam[PaymentParamsConstants.CUSTOMER_ADDRESS]=objPaymentParam.getCustomerAddress()
-        hmPaymentParam[PaymentParamsConstants.CUSTOMER_ADDRESS_PIN]=objPaymentParam.getCustomerAddressPin()
+        
         return hmPaymentParam;
     }
 }
