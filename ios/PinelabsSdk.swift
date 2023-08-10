@@ -54,9 +54,9 @@ class PinelabsSdk: UIViewController {
         let payModeOnLandingPage = options["payModeOnLandingPage"] as! String;
         let customerEmail = options["customerEmail"] as! String;
         let customerMobileNo = options["customerMobileNo"] as! String;
-        let customerId = options["customerId"] as! String;
-        let customerAddress = options["customerAddress"] as! String;
-        let customerAddressPin = options["customerAddressPin"] as! String;
+        let customerId = options["customerId"] != nil ? options["customerId"] as! String : "";
+        let customerAddress = options["customerAddress"] != nil ? options["customerAddress"] as! String : "";
+        let customerAddressPin = options["customerAddressPin"] != nil ? options["customerAddressPin"] as! String : "";
         let udfField1 = options["udfField1"] != nil ? options["udfField1"] as! String : "";
         let udfField2 = options["udfField2"] != nil ? options["udfField2"] as! String : "";
         let udfField3 = options["udfField3"] != nil ? options["udfField3"] as! String : "";
