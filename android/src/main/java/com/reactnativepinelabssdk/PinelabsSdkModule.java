@@ -69,6 +69,7 @@ public class PinelabsSdkModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onCancelTxn(int code, String message) {
+        onResponse.invoke();
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
       }
 
