@@ -171,6 +171,7 @@ public class MerchantCallbackResponse:UIViewController, IPinePGResponseCallback
     }
     public func onCancelTxn(code: Int, message: String)
     {
+        PinelabsSdk.onResponseCallback!([])
         Toas.default.show(text: message, duration: 4.0)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             Toas.default.dismiss(animated: true);
