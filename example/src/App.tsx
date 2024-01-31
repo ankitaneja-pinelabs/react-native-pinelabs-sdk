@@ -11,15 +11,15 @@ import {
 export default function App() {
   const handlePress = async () => {
     const hashOptions: hashOptions = {
-      merchantId: 106600,
+      merchantId: XXXXX, //merchant ID
       merchantTxnId: `reactTestApp${Math.round(Math.random() * 10000000)}`,
-      merchantAccessCode: 'bcf441be-411b-46a1-aa88-c6e852a7d68c',
+      merchantAccessCode: 'XXXXXX-XXX', //Access code
       amount: 10000,
       navigationMode: 2,
       transactionType: 1,
       payModeOnLandingPage: '1',
-      customerEmail: 'harsh.kumar01@pinelabs.com',
-      customerMobileNo: '9582492891',
+      customerEmail: abc@gmail.com, // email
+      customerMobileNo: '12345XXXX', // mobile no.
       customerId: '786',
       customerAddress: 'hno 15',
       customerAddressPin: '201301',
@@ -31,8 +31,8 @@ export default function App() {
 
     const hash = await generateHash(
       hashOptions,
-      '9A7282D0556544C59AFE8EC92F5C85F6'
-    );
+      'XXXXXXXXXX'
+    ); // secret key and hashOptions
 
     const paymentOptions: paymentOptions = {
       ...hashOptions,
